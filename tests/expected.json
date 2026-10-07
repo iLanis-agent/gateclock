@@ -1,0 +1,777 @@
+[
+ {
+  "id": "hand-security-binds",
+  "raw": {
+   "flight": "14:00",
+   "bags": true,
+   "drive": 40
+  },
+  "expected": {
+   "comfortableLeave": 710,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 735,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 25
+  }
+ },
+ {
+  "id": "hand-bagdrop-binds",
+  "raw": {
+   "flight": "10:00",
+   "bags": true,
+   "bagCutoff": 60,
+   "bagQueue": 20,
+   "securityMedian": 5,
+   "securityBad": 8,
+   "walk": 5,
+   "doorClose": 10,
+   "checkinCutoff": 0,
+   "drive": 25,
+   "bufferPct": 0.2
+  },
+  "expected": {
+   "comfortableLeave": 490,
+   "comfortablePrev": false,
+   "comfortableBinding": "bag-drop cutoff",
+   "riskyLeave": 490,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 0
+  }
+ },
+ {
+  "id": "hand-checkin-binds",
+  "raw": {
+   "flight": "09:00",
+   "bags": false,
+   "checkinCutoff": 90,
+   "securityMedian": 5,
+   "securityBad": 10,
+   "walk": 5,
+   "doorClose": 10,
+   "drive": 15,
+   "bufferPct": 0
+  },
+  "expected": {
+   "comfortableLeave": 435,
+   "comfortablePrev": false,
+   "comfortableBinding": "check-in cutoff",
+   "riskyLeave": 435,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 0
+  }
+ },
+ {
+  "id": "hand-wrap-evening-before",
+  "raw": {
+   "flight": "00:30",
+   "bags": false,
+   "checkinCutoff": 0,
+   "drive": 20
+  },
+  "expected": {
+   "comfortableLeave": 1375,
+   "comfortablePrev": true,
+   "comfortableBinding": "security",
+   "riskyLeave": 1405,
+   "riskyPrev": true,
+   "riskyBinding": "security",
+   "savedByRisk": 30
+  }
+ },
+ {
+  "id": "hand-zero-drive",
+  "raw": {
+   "flight": "18:45",
+   "bags": false,
+   "drive": 0,
+   "shuttle": 0,
+   "checkinCutoff": 0,
+   "securityMedian": 10,
+   "securityBad": 30,
+   "walk": 15
+  },
+  "expected": {
+   "comfortableLeave": 1065,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 1085,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 20
+  }
+ },
+ {
+  "id": "hand-intl-bags",
+  "raw": {
+   "flight": "23:15",
+   "tripType": "international",
+   "bags": true,
+   "drive": 75,
+   "bufferPct": 0.4,
+   "shuttle": 20,
+   "securityMedian": 25,
+   "securityBad": 70
+  },
+  "expected": {
+   "comfortableLeave": 1160,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 1200,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 40
+  }
+ },
+ {
+  "id": "rand-00",
+  "raw": {
+   "flight": "07:25",
+   "tripType": "domestic",
+   "bags": true,
+   "doorClose": 29,
+   "checkinCutoff": 90,
+   "bagCutoff": 36,
+   "bagQueue": 13,
+   "securityMedian": 9,
+   "walk": 19,
+   "shuttle": 25,
+   "drive": 110,
+   "bufferPct": 0,
+   "securityBad": 61
+  },
+  "expected": {
+   "comfortableLeave": 188,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 220,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 32
+  }
+ },
+ {
+  "id": "rand-01",
+  "raw": {
+   "flight": "03:35",
+   "tripType": "domestic",
+   "bags": false,
+   "doorClose": 13,
+   "checkinCutoff": 90,
+   "bagCutoff": 40,
+   "bagQueue": 10,
+   "securityMedian": 8,
+   "walk": 13,
+   "shuttle": 0,
+   "drive": 51,
+   "bufferPct": 0.5,
+   "securityBad": 65
+  },
+  "expected": {
+   "comfortableLeave": 47,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 48,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 1
+  }
+ },
+ {
+  "id": "rand-02",
+  "raw": {
+   "flight": "07:00",
+   "tripType": "international",
+   "bags": true,
+   "doorClose": 27,
+   "checkinCutoff": 0,
+   "bagCutoff": 43,
+   "bagQueue": 22,
+   "securityMedian": 6,
+   "walk": 4,
+   "shuttle": 0,
+   "drive": 10,
+   "bufferPct": 0,
+   "securityBad": 8
+  },
+  "expected": {
+   "comfortableLeave": 345,
+   "comfortablePrev": false,
+   "comfortableBinding": "bag-drop cutoff",
+   "riskyLeave": 345,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 0
+  }
+ },
+ {
+  "id": "rand-03",
+  "raw": {
+   "flight": "16:00",
+   "tripType": "international",
+   "bags": true,
+   "doorClose": 19,
+   "checkinCutoff": 0,
+   "bagCutoff": 50,
+   "bagQueue": 25,
+   "securityMedian": 6,
+   "walk": 4,
+   "shuttle": 15,
+   "drive": 29,
+   "bufferPct": 0.5,
+   "securityBad": 38
+  },
+  "expected": {
+   "comfortableLeave": 815,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 826,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 11
+  }
+ },
+ {
+  "id": "rand-04",
+  "raw": {
+   "flight": "23:30",
+   "tripType": "domestic",
+   "bags": true,
+   "doorClose": 27,
+   "checkinCutoff": 90,
+   "bagCutoff": 54,
+   "bagQueue": 25,
+   "securityMedian": 9,
+   "walk": 5,
+   "shuttle": 25,
+   "drive": 76,
+   "bufferPct": 0.25,
+   "securityBad": 11
+  },
+  "expected": {
+   "comfortableLeave": 1200,
+   "comfortablePrev": false,
+   "comfortableBinding": "check-in cutoff",
+   "riskyLeave": 1200,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 0
+  }
+ },
+ {
+  "id": "rand-05",
+  "raw": {
+   "flight": "14:20",
+   "tripType": "international",
+   "bags": true,
+   "doorClose": 11,
+   "checkinCutoff": 60,
+   "bagCutoff": 52,
+   "bagQueue": 16,
+   "securityMedian": 28,
+   "walk": 10,
+   "shuttle": 15,
+   "drive": 65,
+   "bufferPct": 0.1,
+   "securityBad": 46
+  },
+  "expected": {
+   "comfortableLeave": 690,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 705,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 15
+  }
+ },
+ {
+  "id": "rand-06",
+  "raw": {
+   "flight": "12:30",
+   "tripType": "domestic",
+   "bags": false,
+   "doorClose": 11,
+   "checkinCutoff": 0,
+   "bagCutoff": 71,
+   "bagQueue": 9,
+   "securityMedian": 15,
+   "walk": 20,
+   "shuttle": 0,
+   "drive": 67,
+   "bufferPct": 0,
+   "securityBad": 54
+  },
+  "expected": {
+   "comfortableLeave": 598,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 637,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 39
+  }
+ },
+ {
+  "id": "rand-07",
+  "raw": {
+   "flight": "03:15",
+   "tripType": "international",
+   "bags": false,
+   "doorClose": 10,
+   "checkinCutoff": 90,
+   "bagCutoff": 46,
+   "bagQueue": 14,
+   "securityMedian": 6,
+   "walk": 7,
+   "shuttle": 0,
+   "drive": 12,
+   "bufferPct": 0.1,
+   "securityBad": 55
+  },
+  "expected": {
+   "comfortableLeave": 92,
+   "comfortablePrev": false,
+   "comfortableBinding": "check-in cutoff",
+   "riskyLeave": 92,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 0
+  }
+ },
+ {
+  "id": "rand-08",
+  "raw": {
+   "flight": "20:10",
+   "tripType": "international",
+   "bags": false,
+   "doorClose": 23,
+   "checkinCutoff": 60,
+   "bagCutoff": 53,
+   "bagQueue": 21,
+   "securityMedian": 21,
+   "walk": 3,
+   "shuttle": 10,
+   "drive": 26,
+   "bufferPct": 0.5,
+   "securityBad": 59
+  },
+  "expected": {
+   "comfortableLeave": 1076,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 1101,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 25
+  }
+ },
+ {
+  "id": "rand-09",
+  "raw": {
+   "flight": "00:00",
+   "tripType": "domestic",
+   "bags": false,
+   "doorClose": 18,
+   "checkinCutoff": 30,
+   "bagCutoff": 34,
+   "bagQueue": 8,
+   "securityMedian": 17,
+   "walk": 7,
+   "shuttle": 10,
+   "drive": 117,
+   "bufferPct": 0.5,
+   "securityBad": 42
+  },
+  "expected": {
+   "comfortableLeave": 1187,
+   "comfortablePrev": true,
+   "comfortableBinding": "security",
+   "riskyLeave": 1212,
+   "riskyPrev": true,
+   "riskyBinding": "security",
+   "savedByRisk": 25
+  }
+ },
+ {
+  "id": "rand-10",
+  "raw": {
+   "flight": "19:45",
+   "tripType": "domestic",
+   "bags": false,
+   "doorClose": 29,
+   "checkinCutoff": 0,
+   "bagCutoff": 33,
+   "bagQueue": 16,
+   "securityMedian": 8,
+   "walk": 11,
+   "shuttle": 25,
+   "drive": 56,
+   "bufferPct": 0.5,
+   "securityBad": 19
+  },
+  "expected": {
+   "comfortableLeave": 1017,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 1028,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 11
+  }
+ },
+ {
+  "id": "rand-11",
+  "raw": {
+   "flight": "20:50",
+   "tripType": "domestic",
+   "bags": false,
+   "doorClose": 19,
+   "checkinCutoff": 60,
+   "bagCutoff": 45,
+   "bagQueue": 24,
+   "securityMedian": 14,
+   "walk": 4,
+   "shuttle": 15,
+   "drive": 14,
+   "bufferPct": 0,
+   "securityBad": 27
+  },
+  "expected": {
+   "comfortableLeave": 1161,
+   "comfortablePrev": false,
+   "comfortableBinding": "check-in cutoff",
+   "riskyLeave": 1161,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 0
+  }
+ },
+ {
+  "id": "rand-12",
+  "raw": {
+   "flight": "06:55",
+   "tripType": "international",
+   "bags": false,
+   "doorClose": 22,
+   "checkinCutoff": 60,
+   "bagCutoff": 46,
+   "bagQueue": 16,
+   "securityMedian": 26,
+   "walk": 18,
+   "shuttle": 15,
+   "drive": 51,
+   "bufferPct": 0.1,
+   "securityBad": 80
+  },
+  "expected": {
+   "comfortableLeave": 224,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 278,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 54
+  }
+ },
+ {
+  "id": "rand-13",
+  "raw": {
+   "flight": "08:45",
+   "tripType": "international",
+   "bags": true,
+   "doorClose": 14,
+   "checkinCutoff": 45,
+   "bagCutoff": 72,
+   "bagQueue": 11,
+   "securityMedian": 10,
+   "walk": 20,
+   "shuttle": 25,
+   "drive": 112,
+   "bufferPct": 0.5,
+   "securityBad": 13
+  },
+  "expected": {
+   "comfortableLeave": 249,
+   "comfortablePrev": false,
+   "comfortableBinding": "bag-drop cutoff",
+   "riskyLeave": 249,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 0
+  }
+ },
+ {
+  "id": "rand-14",
+  "raw": {
+   "flight": "15:05",
+   "tripType": "domestic",
+   "bags": true,
+   "doorClose": 19,
+   "checkinCutoff": 45,
+   "bagCutoff": 41,
+   "bagQueue": 21,
+   "securityMedian": 12,
+   "walk": 18,
+   "shuttle": 0,
+   "drive": 8,
+   "bufferPct": 0.25,
+   "securityBad": 66
+  },
+  "expected": {
+   "comfortableLeave": 771,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 825,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 54
+  }
+ },
+ {
+  "id": "rand-15",
+  "raw": {
+   "flight": "21:00",
+   "tripType": "international",
+   "bags": true,
+   "doorClose": 22,
+   "checkinCutoff": 45,
+   "bagCutoff": 71,
+   "bagQueue": 11,
+   "securityMedian": 15,
+   "walk": 8,
+   "shuttle": 15,
+   "drive": 59,
+   "bufferPct": 0.25,
+   "securityBad": 46
+  },
+  "expected": {
+   "comfortableLeave": 1084,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 1089,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 5
+  }
+ },
+ {
+  "id": "rand-16",
+  "raw": {
+   "flight": "17:15",
+   "tripType": "domestic",
+   "bags": true,
+   "doorClose": 17,
+   "checkinCutoff": 60,
+   "bagCutoff": 41,
+   "bagQueue": 23,
+   "securityMedian": 15,
+   "walk": 23,
+   "shuttle": 25,
+   "drive": 33,
+   "bufferPct": 0.25,
+   "securityBad": 62
+  },
+  "expected": {
+   "comfortableLeave": 844,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 891,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 47
+  }
+ },
+ {
+  "id": "rand-17",
+  "raw": {
+   "flight": "22:40",
+   "tripType": "domestic",
+   "bags": true,
+   "doorClose": 16,
+   "checkinCutoff": 45,
+   "bagCutoff": 75,
+   "bagQueue": 17,
+   "securityMedian": 13,
+   "walk": 9,
+   "shuttle": 0,
+   "drive": 61,
+   "bufferPct": 0.5,
+   "securityBad": 28
+  },
+  "expected": {
+   "comfortableLeave": 1176,
+   "comfortablePrev": false,
+   "comfortableBinding": "bag-drop cutoff",
+   "riskyLeave": 1176,
+   "riskyPrev": false,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 0
+  }
+ },
+ {
+  "id": "rand-18",
+  "raw": {
+   "flight": "08:00",
+   "tripType": "domestic",
+   "bags": false,
+   "doorClose": 24,
+   "checkinCutoff": 30,
+   "bagCutoff": 46,
+   "bagQueue": 6,
+   "securityMedian": 13,
+   "walk": 20,
+   "shuttle": 15,
+   "drive": 30,
+   "bufferPct": 0.5,
+   "securityBad": 44
+  },
+  "expected": {
+   "comfortableLeave": 332,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 363,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 31
+  }
+ },
+ {
+  "id": "rand-19",
+  "raw": {
+   "flight": "22:10",
+   "tripType": "international",
+   "bags": false,
+   "doorClose": 28,
+   "checkinCutoff": 60,
+   "bagCutoff": 64,
+   "bagQueue": 20,
+   "securityMedian": 26,
+   "walk": 16,
+   "shuttle": 0,
+   "drive": 37,
+   "bufferPct": 0.5,
+   "securityBad": 58
+  },
+  "expected": {
+   "comfortableLeave": 1172,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 1204,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 32
+  }
+ },
+ {
+  "id": "rand-20",
+  "raw": {
+   "flight": "21:45",
+   "tripType": "international",
+   "bags": false,
+   "doorClose": 25,
+   "checkinCutoff": 90,
+   "bagCutoff": 58,
+   "bagQueue": 23,
+   "securityMedian": 20,
+   "walk": 18,
+   "shuttle": 10,
+   "drive": 91,
+   "bufferPct": 0.5,
+   "securityBad": 52
+  },
+  "expected": {
+   "comfortableLeave": 1063,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 1068,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 5
+  }
+ },
+ {
+  "id": "rand-21",
+  "raw": {
+   "flight": "21:15",
+   "tripType": "domestic",
+   "bags": false,
+   "doorClose": 14,
+   "checkinCutoff": 60,
+   "bagCutoff": 57,
+   "bagQueue": 22,
+   "securityMedian": 21,
+   "walk": 16,
+   "shuttle": 0,
+   "drive": 10,
+   "bufferPct": 0.5,
+   "securityBad": 47
+  },
+  "expected": {
+   "comfortableLeave": 1183,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 1200,
+   "riskyPrev": false,
+   "riskyBinding": "check-in cutoff",
+   "savedByRisk": 17
+  }
+ },
+ {
+  "id": "rand-22",
+  "raw": {
+   "flight": "09:30",
+   "tripType": "domestic",
+   "bags": true,
+   "doorClose": 22,
+   "checkinCutoff": 30,
+   "bagCutoff": 46,
+   "bagQueue": 12,
+   "securityMedian": 23,
+   "walk": 6,
+   "shuttle": 25,
+   "drive": 71,
+   "bufferPct": 0.25,
+   "securityBad": 68
+  },
+  "expected": {
+   "comfortableLeave": 348,
+   "comfortablePrev": false,
+   "comfortableBinding": "security",
+   "riskyLeave": 393,
+   "riskyPrev": false,
+   "riskyBinding": "security",
+   "savedByRisk": 45
+  }
+ },
+ {
+  "id": "rand-23",
+  "raw": {
+   "flight": "02:05",
+   "tripType": "international",
+   "bags": true,
+   "doorClose": 10,
+   "checkinCutoff": 60,
+   "bagCutoff": 68,
+   "bagQueue": 22,
+   "securityMedian": 10,
+   "walk": 19,
+   "shuttle": 25,
+   "drive": 25,
+   "bufferPct": 0.5,
+   "securityBad": 35
+  },
+  "expected": {
+   "comfortableLeave": 1412,
+   "comfortablePrev": true,
+   "comfortableBinding": "bag-drop cutoff",
+   "riskyLeave": 1412,
+   "riskyPrev": true,
+   "riskyBinding": "bag-drop cutoff",
+   "savedByRisk": 0
+  }
+ }
+]
