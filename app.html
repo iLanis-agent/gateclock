@@ -1,0 +1,146 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GateClock - when do you actually need to leave for the airport?</title>
+<meta name="description" content="Work backwards from the boarding door to your front door: cutoffs, bag drop, security queue, walk, shuttle and a buffered drive. Comfortable and risky leave times.">
+<style>
+:root{--bg:#0d1420;--card:#16202f;--line:#27344a;--ink:#e9eef6;--dim:#9db0c6;--acc:#7cc4ff;--acc2:#ffd166;--bad:#ff6b6b;--good:#6fd08c}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+main{max-width:720px;margin:0 auto;padding:22px 14px 60px}
+h1{font-size:1.7rem;margin:6px 0 2px}h1 .a{color:var(--acc)}
+.tag{color:var(--dim);margin:0 0 14px}
+.note{background:#101d2e;border:1px solid #1e3a5c;color:#bcd9f5;padding:9px 12px;border-radius:10px;font-size:.9rem;margin:12px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+label{font-size:.82rem;color:var(--dim);display:block;margin:8px 0 3px}
+input,select{background:#0c1522;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 9px;font:inherit;width:100%}
+input[type=checkbox]{width:auto}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>div{flex:1;min-width:96px}
+button{background:var(--acc);border:0;color:#06182b;font-weight:700;border-radius:9px;padding:11px 16px;font:inherit;cursor:pointer;width:100%}
+details{margin-top:8px}summary{cursor:pointer;color:var(--acc);font-size:.9rem}
+.big{font-size:2.1rem;font-weight:800;margin:2px 0}
+.scn{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+.scn>div{flex:1;min-width:200px;background:#101a29;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.scn .lbl{font-size:.8rem;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}
+.scn .why{font-size:.85rem;color:var(--dim)}
+.prev{color:var(--acc2);font-size:.85rem;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
+td,th{padding:6px 8px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--dim);font-size:.78rem;font-weight:600}
+.slack{color:var(--good);font-size:.82rem}
+.slack.tight{color:var(--acc2);font-weight:700}
+.bind{display:inline-block;background:#2a2410;color:var(--acc2);border:1px solid #54451c;border-radius:20px;padding:2px 10px;font-size:.78rem;font-weight:700}
+.err{background:#3a1414;border:1px solid #5c2424;color:#ffc9c9;padding:10px 12px;border-radius:10px;margin:10px 0;font-size:.92rem;white-space:pre-wrap}
+a{color:var(--acc)}
+</style></head><body><main>
+<h1>Gate<span class="a">Clock</span></h1>
+<p class="tag">"Get there 2 hours early" is a guess. GateClock chains backwards from the moment the boarding door closes - through the security queue, bag drop, the drive with buffer - and tells you when to actually leave.</p>
+<div class="note">All numbers are yours or labelled typical defaults. This is arithmetic, not live airport data: security lines and traffic vary, so treat the comfortable time as the plan and the risky one as the gamble.</div>
+
+<div class="card">
+<div class="row">
+<div><label>Flight departs</label><input id="flight" value="14:00"></div>
+<div><label>Trip type</label><select id="tripType"><option value="domestic">domestic</option><option value="international">international</option></select></div>
+<div style="display:flex;align-items:flex-end;padding-bottom:9px"><label style="margin:0"><input id="bags" type="checkbox" checked> checking bags</label></div>
+</div>
+<div class="row">
+<div><label>Drive to airport (min)</label><input id="drive" type="number" value="40"></div>
+<div><label>Drive buffer %</label><input id="bufferPct" type="number" step="0.05" value="0.25"></div>
+<div><label>Parking shuttle (min, 0 = drop-off)</label><input id="shuttle" type="number" value="0"></div>
+</div>
+<details><summary>Airport timings (defaults are typical - adjust to your airport and airline)</summary>
+<div class="row">
+<div><label>Door closes before departure (min)</label><input id="doorClose" type="number"></div>
+<div><label>Check-in cutoff (min, 0 = checked in online)</label><input id="checkinCutoff" type="number"></div>
+<div><label>Bag-drop cutoff (min)</label><input id="bagCutoff" type="number"></div>
+<div><label>Bag-drop counter time (min)</label><input id="bagQueue" type="number" value="10"></div>
+</div>
+<div class="row">
+<div><label>Security wait, typical (min)</label><input id="securityMedian" type="number" value="15"></div>
+<div><label>Security wait, bad day (min)</label><input id="securityBad" type="number" value="45"></div>
+<div><label>Walk security to gate (min)</label><input id="walk" type="number" value="10"></div>
+</div>
+</details>
+</div>
+
+<button id="go" type="button">When do I leave?</button>
+<div id="errors"></div>
+<div id="results"></div>
+<p style="margin-top:18px"><a href="index.html">About GateClock</a></p>
+</main>
+<script src="engine.js"></script>
+<script>
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var esc = GateClock.esc;
+
+function fillDefaults(){
+  var t = $('tripType').value, d = GateClock.DEFAULTS[t];
+  $('doorClose').value = d.doorClose;
+  $('checkinCutoff').value = d.checkinCutoff;
+  $('bagCutoff').value = d.bagCutoff;
+}
+$('tripType').onchange = fillDefaults;
+fillDefaults();
+
+function readInput(){
+  return {
+    flight: $('flight').value,
+    tripType: $('tripType').value,
+    bags: $('bags').checked,
+    drive: $('drive').value,
+    bufferPct: $('bufferPct').value,
+    shuttle: $('shuttle').value,
+    doorClose: $('doorClose').value,
+    checkinCutoff: $('checkinCutoff').value,
+    bagCutoff: $('bagCutoff').value,
+    bagQueue: $('bagQueue').value,
+    securityMedian: $('securityMedian').value,
+    securityBad: $('securityBad').value,
+    walk: $('walk').value
+  };
+}
+
+function stageRows(p){
+  var html = '<table><tr><th>Stage</th><th>Time</th><th>Spare</th></tr>';
+  for (var i = 0; i < p.stages.length; i++) {
+    var s = p.stages[i];
+    html += '<tr><td>' + esc(s.label) + '</td><td>' + GateClock.fmtHM(s.at) + '</td><td>';
+    if (s.slack !== undefined) {
+      html += s.slack === 0
+        ? '<span class="slack tight">on the deadline</span>'
+        : '<span class="slack">' + Math.round(s.slack) + ' min spare</span>';
+    } else html += '<span style="color:var(--dim)">-</span>';
+    html += '</td></tr>';
+  }
+  return html + '</table>';
+}
+
+function render(r){
+  var c = r.comfortable, k = r.risky;
+  var html = '<div class="card"><div class="scn">';
+  html += '<div><div class="lbl">Leave home - comfortable plan</div>' +
+    '<div class="big">' + GateClock.fmtHM(r.comfortableLeave.leave) + '</div>' +
+    (r.comfortableLeave.previousDay ? '<div class="prev">the evening before</div>' : '') +
+    '<div class="why">bad-day security (' + Math.round(c.securityWait) + ' min). Binding limit: <span class="bind">' + esc(c.binding) + '</span></div></div>';
+  html += '<div><div class="lbl">Leave home - risky plan</div>' +
+    '<div class="big">' + GateClock.fmtHM(r.riskyLeave.leave) + '</div>' +
+    (r.riskyLeave.previousDay ? '<div class="prev">the evening before</div>' : '') +
+    '<div class="why">typical security (' + Math.round(k.securityWait) + ' min). Binding limit: <span class="bind">' + esc(k.binding) + '</span><br>' +
+    (r.savedByRisk > 0 ? 'leaves ' + r.savedByRisk + ' min later, on a normal day' : 'same as comfortable - the queue is not the limit here') + '</div></div>';
+  html += '</div>';
+  html += '<h3 style="margin:14px 0 4px">Your day, forward (comfortable plan)</h3>' + stageRows(c);
+  html += '<p style="color:var(--dim);font-size:.85rem">Drive counted as ' + c.driveMin + ' min (your ' +
+    Math.round(r.input.drive) + ' min plus buffer). If a stage lands "on the deadline", that limit is what sets your leave time.</p>';
+  html += '</div>';
+  return html;
+}
+
+$('go').onclick = function(){
+  $('errors').innerHTML = ''; $('results').innerHTML = '';
+  try {
+    var r = GateClock.solve(readInput());
+    $('results').innerHTML = render(r);
+    $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (e) {
+    $('errors').innerHTML = '<div class="err">' + esc(e.message) + '</div>';
+  }
+};
+</script></body></html>
